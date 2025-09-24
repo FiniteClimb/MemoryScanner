@@ -14,9 +14,7 @@ License: Research and Learning Only – see LICENSE file for full details
 
 void introduction() {
   printf(
-      "Hello, welcome to memory scanner 2nd edition v 0.3.5-alpha You will "
-      "soon "
-      "be able to look for values");
+      "Hello, welcome to memory scanner in c for linux. Hopefully it works.\n");
 }
 
 void gettargettype(struct TargetInfo* target) {
