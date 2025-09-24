@@ -3,6 +3,12 @@
 ## Overview:
 This is a Linux memory scanner written in C. It reads `/proc/[pid]/maps`, filters memory regions, scans for target values (called hits), and allows changing values of said hits.
 
+## Usage:
+Compile:
+gcc -O2 main.c mapfile.c globaltypes.h memfile.c targetcomp.c userio.c -o memscanner
+Use:
+./memscanner [pid]
+
 ## Features:
 - Parses Linux process memory maps and identifies readable regions.
 - Reads memory contents.
