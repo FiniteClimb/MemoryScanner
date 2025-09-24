@@ -7,6 +7,8 @@ This is a Linux memory scanner written in C. It reads `/proc/[pid]/maps`, filter
 Compile:
 gcc -O2 main.c mapfile.c globaltypes.h memfile.c targetcomp.c userio.c -o memscanner
 
+
+
 Use:
 ./memscanner [pid]
 
