@@ -6,7 +6,7 @@ Each project is organized in its own subfolder, with individual README and LICEN
 Please consult each project's files for instructions and legal terms before using any project.
 
 ## Projects
-- [memoryscanner-c-linux](/memoryscanner-c-linux) – Original C version for Linux.
+- [memscanner-c-linux](/memscanner-c-linux) – Original C version for Linux.
 - Future projects pending.
 
 
