@@ -2,7 +2,7 @@
 
 #include <sys/uio.h>
 
-void Mem::ReadAllMem(vector<MapRegion> &Maps, const int pid) {
+void Mem::ReadAllMem(vector<MapRegion> &Maps) {
   struct iovec MapioVec[Maps.size()];
   struct iovec MemioVec[Maps.size()];
   for (unsigned long i = 0; i < Maps.size(); ++i) {
@@ -14,7 +14,7 @@ void Mem::ReadAllMem(vector<MapRegion> &Maps, const int pid) {
   }
 
   signed long read =
-      process_vm_readv(pid, MapioVec, Maps.size(), MemioVec, Maps.size(), 0);
+      process_vm_readv(pidnum, MapioVec, Maps.size(), MemioVec, Maps.size(), 0);
 
   printf("READ AMOUNT=%li\n", read);
 

@@ -37,6 +37,7 @@ void Userio::getTargetType() {
 }
 
 void Userio::getTargetValue() {
+  targetValue.clear();
   cout << "Give target value:";
 
   if (targetType == "int")
@@ -69,13 +70,26 @@ void Userio::printRawBytes(const vector<unsigned char> &bytebuf) {
   cout << "bytebuf size:" << bytebuf.size() << "\n";
 }
 
-void Userio::printHits(const vector<HitInfo> &Hits) {
+void Userio::printHits(vector<HitInfo> &Hits) {
   if (Hits.size() == 0) {
     cout << "No hits.\n";
   }
+  int highercount = 0;
+  int lowercount = 0;
+  int equalcount = 0;
   for (unsigned long i = 0; i < Hits.size(); ++i) {
-    cout << Hits[i];
+    cout << std::dec << i << " | " << Hits[i];
+    if (Hits[i].relative_to_prev_value > 0)
+      ++highercount;
+    else if (Hits[i].relative_to_prev_value == 0)
+      ++equalcount;
+    else if (Hits[i].relative_to_prev_value < 0)
+      ++lowercount;
+    Hits[i].relative_to_prev_value = 0;
   }
+
+  printf(" highercount=%i, equalcount=%i, lowercount=%i)", highercount,
+         equalcount, lowercount);
   cout << "Hit count:" << std::dec << Hits.size() << "\n";
 }
 

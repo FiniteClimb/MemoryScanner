@@ -13,8 +13,8 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 
-const int INITIAL_SCAN = 0;
-const int RE_SCAN = 1;
+const int RELATIVE_COMPARE = 3;
+const int TARGET_COMPARE = 4;
 
 inline void my_ljust(std::stringstream &strstream, unsigned long width,
                      char fill = ' ') {
@@ -55,9 +55,9 @@ inline std::ostream &operator<<(std::ostream &os, const HitInfo &HitInfo) {
   if (HitInfo.relative_to_prev_value == 0)
     os << "SAME: ";
   if (HitInfo.relative_to_prev_value == 1)
-    os << "BIGGER: ";
+    os << "HIGHER: ";
   if (HitInfo.relative_to_prev_value == -1)
-    os << "SMALLER: ";
+    os << "LOWER: ";
 
   os << "0x" << std::hex << HitInfo.abs_location << " at  "
      << HitInfo.hit_region->name << "\n";

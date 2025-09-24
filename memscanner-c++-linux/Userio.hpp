@@ -32,7 +32,7 @@ public:
 
   int checkArgCount(const int argc, char **argv);
 
-  void printHits(const vector<HitInfo> &Hits);
+  void printHits(vector<HitInfo> &Hits);
   void printMaps(const vector<MapRegion> &MapRegions);
   void printRawBytes(const vector<unsigned char> &bytebuf);
 

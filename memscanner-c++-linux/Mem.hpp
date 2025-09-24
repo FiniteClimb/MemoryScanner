@@ -10,14 +10,15 @@ using std::string;
 using std::vector;
 
 class Mem {
+  int pidnum;
 
 public:
   Mem(const string &pid, vector<MapRegion> &Maps) {
-    int pidnum = std::stoi(pid);
-    ReadAllMem(Maps, pidnum);
+    pidnum = std::stoi(pid);
+    ReadAllMem(Maps);
   }
 
-  void ReadAllMem(vector<MapRegion> &Maps, const int pid);
+  void ReadAllMem(vector<MapRegion> &Maps);
   // template<typename T>vector<unsigned char>WriteMem(unsinged long TARGET_LOC,
   // vector<unsigned char>NEW_VALUE)
 };

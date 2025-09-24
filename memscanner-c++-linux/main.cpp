@@ -17,6 +17,7 @@ int main(int argc, char **argv) {
     UserioObj.printMaps(MapsObj.mapRegions);
 
     while (true) {
+
       UserioObj.printHits(ValCompObj.Hits);
 
       if (UserioObj.getifRescan() == "edit") {
@@ -31,17 +32,24 @@ int main(int argc, char **argv) {
       }
       string rescan_type;
       rescan_type = UserioObj.getRescanType();
-      if (rescan_type == "all")
-        continue;
-      if (rescan_type == "specific")
+
+      MemObj.ReadAllMem(MapsObj.mapRegions);
+
+      int COMPARE_TYPE;
+      if (rescan_type == "specific") {
+        COMPARE_TYPE = TARGET_COMPARE;
         UserioObj.getTargetValue();
+        for (unsigned long i = 0; i < ValCompObj.Hits.size(); ++i)
+          ValCompObj.refreshBytes(ValCompObj.Hits[i]);
+      } else
+        COMPARE_TYPE = RELATIVE_COMPARE;
 
-      MemObj.ReadAllMem(MapsObj.mapRegions, pid);
-
-      cout << "testt\n";
-      ValCompObj.rescanHits(MapsObj.mapRegions, UserioObj.targetValue);
-      cout << "anothertest\n";
+      ValCompObj.rescanHits(UserioObj.targetValue, COMPARE_TYPE);
       ValCompObj.EvaluateHits(rescan_type, UserioObj.targetValue);
+
+      for (unsigned long i = 0; i < ValCompObj.Hits.size(); ++i)
+        ValCompObj.refreshBytes(ValCompObj.Hits[i]);
+
       continue;
     }
     continue;
