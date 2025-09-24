@@ -1,0 +1,10 @@
+This is my first completed project after about 2 months of working with programming. (by August 2025)
+
+Looking back just now a month later, I already see a lot of questionable and lacking areas in the code.
+Therefore, I will not claim it is optimal for any use in general. 
+However I would still be happy if you used it and gave feedback.
+
+This will not be updated. 
+You are all welcome and encouraged to share thoughts and criticism regardless.
+
+I am currently working on a C++ version that I will also share on here once it's functioning.
