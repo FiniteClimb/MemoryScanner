@@ -1,6 +1,5 @@
 **Memory Scanner in C++ for Linux**
 
-**UNFINISHED*
 
 ## Overview:
 This is a Linux memory scanner written in C++. It reads `/proc/[pid]/maps`, filters memory regions, scans for target values (called hits), and allows changing values of said hits.
