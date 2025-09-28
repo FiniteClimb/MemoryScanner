@@ -19,8 +19,8 @@ public:
   }
 
   void ReadAllMem(vector<MapRegion> &Maps);
-  // template<typename T>vector<unsigned char>WriteMem(unsinged long TARGET_LOC,
-  // vector<unsigned char>NEW_VALUE)
+  void WriteValue(vector<unsigned char> WRITE_VALUE,
+                  unsigned long &WRITE_ADDRESS);
 };
 
 #endif

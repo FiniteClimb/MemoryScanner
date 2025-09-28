@@ -6,12 +6,13 @@
 struct ValComp {
   void initTargetScan(vector<MapRegion> &Maps,
                       const vector<unsigned char> &targetValue);
-  void refreshBytes(HitInfo &Hit);
+
   HitInfo MakeHit(MapRegion &hit_Region, unsigned long RELATIVE_lOCATION);
 
 public:
+  void refreshByte(HitInfo &Hit);
+  void refreshBytes();
   vector<HitInfo> Hits;
-
   ValComp(vector<MapRegion> &Maps, vector<unsigned char> &targetValue) {
     initTargetScan(Maps, targetValue);
   }

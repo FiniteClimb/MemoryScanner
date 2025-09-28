@@ -10,8 +10,7 @@ void ValComp::initTargetScan(vector<MapRegion> &Maps,
 
   int cmpresult;
   for (unsigned long i = 0; i < Maps.size(); ++i) {
-    for (unsigned long k = 0; k < Maps[i].readbuff.size();
-         k += targetValue.size()) {
+    for (unsigned long k = 0; k < Maps[i].readbuff.size(); ++k) {
       cmpresult =
           memcmp(targetValue.data(), &Maps[i].readbuff[k], targetValue.size());
 
@@ -30,34 +29,42 @@ HitInfo ValComp::MakeHit(MapRegion &hit_Region, unsigned long REL_LOC) {
   TempHit.bytes_around.resize(49);
 
   std::fill_n(TempHit.bytes_around.data(), TempHit.bytes_around.size(), 0xfd);
-  refreshBytes(TempHit);
+  refreshByte(TempHit);
   return TempHit;
 }
 
 void ValComp::rescanHits(vector<unsigned char> &targetValue, int COMPARE_TYPE) {
 
-  int cmpresults;
+  int cmpresult = 0;
+  unsigned char *cmpwith = targetValue.data();
 
   for (unsigned long i = 0; i < Hits.size(); ++i) {
-    if (COMPARE_TYPE == TARGET_COMPARE)
-      cmpresults = (memcmp(&Hits[i].bytes_around[24], targetValue.data(),
-                           targetValue.size()));
-    else if (COMPARE_TYPE == RELATIVE_COMPARE)
-      cmpresults = (memcmp(&Hits[i].bytes_around[24],
-                           &Hits[i].hit_region->readbuff[Hits[i].rel_location],
-                           targetValue.size()));
-    else
-      exit(1);
+    if (COMPARE_TYPE == RELATIVE_COMPARE)
+      cmpwith = &Hits[i].hit_region->readbuff[Hits[i].rel_location];
 
-    if (cmpresults == 0)
+    for (unsigned long j = 0; j < targetValue.size(); ++j) {
+      auto s1 = Hits[i].bytes_around[24 + targetValue.size() - 1 - j];
+      auto s2 = cmpwith[targetValue.size() - 1 - j];
+
+      if (s1 > s2) {
+        cmpresult = 1;
+        break;
+      } else if (s1 < s2) {
+        cmpresult = -1;
+        break;
+      } else
+        cmpresult = 0;
+    }
+
+    if (cmpresult == 0)
       Hits[i].relative_to_prev_value = 0;
-    else if (cmpresults < 0)
+    else if (cmpresult < 0)
       Hits[i].relative_to_prev_value = 1;
-    else if (cmpresults > 0)
+    else if (cmpresult > 0)
       Hits[i].relative_to_prev_value = -1;
   }
 }
-void ValComp::refreshBytes(HitInfo &Hit) {
+void ValComp::refreshByte(HitInfo &Hit) {
 
   unsigned long start_bytes =
       Hit.rel_location - 24 < 0 ? 0 : Hit.rel_location - 24;
@@ -67,6 +74,20 @@ void ValComp::refreshBytes(HitInfo &Hit) {
           : Hit.rel_location + 24;
   memcpy(Hit.bytes_around.data(), &Hit.hit_region->readbuff[start_bytes],
          end_bytes - start_bytes + 1);
+}
+
+void ValComp::refreshBytes() {
+  for (unsigned long i = 0; i < Hits.size(); ++i) {
+    unsigned long start_bytes =
+        Hits[i].rel_location - 24 < 0 ? 0 : Hits[i].rel_location - 24;
+    unsigned long end_bytes =
+        Hits[i].rel_location + 24 > Hits[i].hit_region->readbuff.size()
+            ? Hits[i].hit_region->readbuff.size()
+            : Hits[i].rel_location + 24;
+    memcpy(Hits[i].bytes_around.data(),
+           &Hits[i].hit_region->readbuff[start_bytes],
+           end_bytes - start_bytes + 1);
+  }
 }
 
 void ValComp::EvaluateHits(string KEEP_TYPE,

@@ -1,21 +1,26 @@
 **Memory Scanner in C++ for Linux**
 
-**UNFINISHED**
-
+**UNFINISHED*
 
 ## Overview:
-**UNFINISHED**
 This is a Linux memory scanner written in C++. It reads `/proc/[pid]/maps`, filters memory regions, scans for target values (called hits), and allows changing values of said hits.
+
+64 bit only.
 
 ## Usage:
 Compile:
-g++ -O2 main.cpp Maps.cpp Mem.cpp Userio.cpp ValComp.cpp types.hpp -o memscanner
+g++ -O2 main.cpp Maps.cpp Mem.cpp Userio.cpp ValComp.cpp types.hpp -o scanner++
 
 Use:
 ./memscanner [pid]
 
 ## Features:
-- Unfinished.
+- Parses Linux process memory maps and identifies readable regions.
+- Reads memory contents.
+- Scans for specific values supporting specific types (integer, long, float, double, string).
+- Allows for rescans based on initial hits. 
+- Can edit hits to new values.
+
 
 ## Disclaimer:
 This software is for **research and learning purposes** only.

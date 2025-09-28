@@ -1,5 +1,6 @@
 #include "types.hpp"
 
+#include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <string>
@@ -23,9 +24,10 @@ public:
   vector<unsigned char> targetValue;
 
   Userio(const int argc, char **argv) {
-    checkArgCount(argc, argv);
-    printf("hello. This is memscanner++ version 0.0.1-dev. It probably doesn't "
-           "work lol. Good luck.\n");
+    if (checkArgCount(argc, argv) == -1)
+      exit(-1);
+    printf("hello. This is memscanner++. You can look for certain values in "
+           "memory and edit them.");
     getTargetType();
     getTargetValue();
   };
@@ -38,12 +40,14 @@ public:
 
   void getTargetType();
   void getTargetValue();
+  vector<unsigned char> getValue();
 
   string getifRescan();
 
   string getRescanType();
-  // string getNewTarget();
 
-  // string getifFreeze();
-  // string getNewValue();
+  int getEditIndex(vector<HitInfo> &Hits);
+  vector<unsigned char> getNewValue();
+
+  string getIfContinue();
 };
